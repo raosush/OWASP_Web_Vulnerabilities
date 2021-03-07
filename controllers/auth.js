@@ -57,21 +57,20 @@ function passsword_strength(password){
     }
 }
 
-//HAVE TO FIND OUT HOW TO USE COOKIES TO KEEP A USER LOGGED IN
 
-function validate(req,res,next) {
-    const {cookie} = req.cookies;
-    if('authcookie' in cookies) {
-        console.log('S_ID exists');
-        if(cookie.authcookie == token){
-            next();
-        }else{
-            res.status(403).send({msg:'unauthourized'});
-        }
-    }else{
-        res.status(403).send({msg:'unauthourized'});
-    }
-}
+//function validate(req,res,next) {
+//   const {cookie} = req.cookies;
+//    if('authcookie' in cookies) {
+//        console.log('S_ID exists');
+//        if(cookie.authcookie == token){
+//            next();
+//        }else{
+//            res.status(403).send({msg:'unauthourized'});
+//        }
+//    }else{
+//        res.status(403).send({msg:'unauthourized'});
+//    }
+//}
 
 exports.home = async (req,res) => {
 //    const options = {
@@ -84,10 +83,10 @@ exports.home = async (req,res) => {
 
 exports.admin = async(req,res) => {
     const {id} = req.body;
-    if(ID == '21'){
+    if(ID == '21'){            //Assuming ID 21 is the admin
         admintag = authenticaterole(role);
     }
-    //if(user.role == 'admin')           Declare an object called user and give it a role attribute - use cookies to authenticate the user?
+    //if(user.role == 'admin')           Declare an object called user and give it a role attribute 
     console.log(id);
     if(admintag==1){
         db.query("DELETE FROM users WHERE ID = " + parseInt(id),  async(error,result) => {
@@ -121,7 +120,7 @@ exports.login = async (req,res) => {
         }
 
         db.query('SELECT * FROM users WHERE email = ?', [email], async(error, result) => {
-            //console.log(results);
+            console.log(results);
             //decrypted_password_bytes = cryptojs.AES.decrypt(password,'secretkey');
             //var decrypted_password = decrypted_password_bytes.toString(cryptojs.enc.Utf8); 
             if( !result || !(await bcrypt.compareSync(password, result[0].password))) { 
@@ -136,20 +135,12 @@ exports.login = async (req,res) => {
                 });
                 console.log('the token is ' + token);
                 cookie = uuidv4();
-                //app.use(express.session({secret:process.env.secret, cookie: {httponly:true, secure:true}}));
                 const cookieOptions = {
-                        //expires : new Date(
-                        //Date.now() + process.env.jwt_cookie_expiry*24*60*60*1000),
-                       //expires : new Date(Date.now() - process.env.jwt_cookie_expiry)
                      
                         httpOnly : true,   //only let access to cookies if we are on a httponly browser method, prevents cookies being accessed by script
                         secure: true     //cookies only sent on secure https
                 }
                 res.cookie('authcookie', cookie, cookieOptions, {path: ''});
-                //app.get('/loggedin', validate, (req,res) => {
-                //    res.cookie('authcookie', token, cookieOptions, {path: ''});
-                //    res.status(200);
-                //});
                 if(ID=='21'){               //user.role again
                     role = 'admin'
                 }
@@ -161,7 +152,7 @@ exports.login = async (req,res) => {
                     res.status(200).redirect('/admin');
                 }
                 else{
-                    res.status(200).redirect('/loggedin');    
+                    res.status(200).redirect('/posts/posts');    
                     //res.cookie('authcookie',cookieOptions);  
                 }
             }
