@@ -1,0 +1,37 @@
+<%- include('./layouts/headers'); -%>
+<% var htmlEscapes = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#x27;',
+    '/': '&#x2F;'
+  };
+%>
+<% var htmlEscape = /[&<>"'\/]/g; %>
+<% function escapeHTML(string) {
+    return ('' + string).replace(htmlEscape, function(match) {
+        return htmlEscapes[match];
+      });
+   }
+%>
+<style nonce="randomcode">
+    .card-inline-css {
+        width: 25em; text-align: center; justify-content: center;
+    }
+    .img-inline-css {
+        width: 100%;
+    }
+</style>
+<% if (post) { %>
+    <div class="card img-fluid mx-auto card-inline-css">
+        <img class="card-img-top img-inline-css" src="https://www.gravatar.com/avatar" alt="Card image">
+        <div class="card-img-overlay">
+            <h5 class="card-title"><b><%= post.title %></b></h5>
+            <div class="card-text"><%- post.content %></div>
+          </div>
+      </div>
+<% } else { %>
+    <p class="text-center">Post Not Found. Go <a href="/addPost">here</a> to add posts.</p>
+<% } %>
+<%- include('./layouts/footers.ejs'); -%>

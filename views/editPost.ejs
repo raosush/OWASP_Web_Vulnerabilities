@@ -1,0 +1,23 @@
+<%- include('./layouts/headers'); -%>
+<div class="container">
+    <% if (message != '') { %>
+        <p class="text-center text-danger"><%= message %></p>
+    <% } %>
+    <% if (post) {%>
+    <form action="" method="post">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" name="title" id="title" placeholder="Title" value="<%= post.title %>" required>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" name="content" id="content" placeholder="content" value="<%= post.content %>" required>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Post</button>
+    </form>
+    <% } else { %>
+        <p class="text-center">Post Not Found. Go <a href="/addPost">here</a> to add posts.</p>
+    <% } %>    
+</div>
+<%- include('./layouts/footers.ejs'); -%>

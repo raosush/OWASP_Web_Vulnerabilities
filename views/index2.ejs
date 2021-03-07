@@ -1,0 +1,32 @@
+<%- include('./layouts/headers'); -%>
+<div class="table-wrapper">
+    <% if (posts.length > 0) {%>
+        <table class="table table-hovered">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Content</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% posts.forEach((post, index) => { %>
+                    <tr>
+                        <th scope="row"><%= post.id %></th>
+                        <td><%= post.title %></td>
+                        <td><%= post.content %></td>
+                        <td>
+                            <a href="/posts/posts/showPost/<%= post.id %>" class="btn btn-primary">Show</a>
+                            <a href="/posts/posts/editPost/<%= post.id %>" class="btn btn-success">Edit</a>
+                            <a href="/posts/posts/deletePost/<%= post.id %>" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p class="text-center">No posts found. Go to add posts.</p>
+    <% } %>
+</div>
+<%- include('./layouts/footers'); -%>
