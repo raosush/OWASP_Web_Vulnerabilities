@@ -64,19 +64,9 @@ app.use(morgan('combined', {
 }))
 //To parse url encoded bodies
 app.use(express.urlencoded({extended:false}));
-//app.use(validator());      //
-//app.use(bodyParser.json({
-//    type : function () {
-//        return true;                               
-//    }
-//}))
 
-//app.use(express.json({
-//    type : function () {
-//        return true;
-//    }
-//}));
-app.use(express.json());
+
+app.use(express.json({strict:true}));
 app.use(cookieParser());    
 app.set('view engine', 'ejs');
 
@@ -107,6 +97,8 @@ app.use('/auth', require('./routes/auth'));
 app.listen(3000, () => {
     console.log("server up and running on 3000");
 });
+
+//SECURE SERVER OPTIONS
 
 //const serveroptions = {
 //    key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
