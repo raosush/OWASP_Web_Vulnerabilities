@@ -17,10 +17,11 @@ app = express();
 //app.use(cookieParser());          //Enable Session Management
 
 const db = mysql.createConnection({
-    host: process.env.database_host,
-    user: process.env.database_user,
-    password: process.env.database_password,
-    database: process.env.database
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB,
+    port: process.env.DB_PORT
 });
 
 function hasNumber(password){
