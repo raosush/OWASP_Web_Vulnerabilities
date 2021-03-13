@@ -20,6 +20,7 @@ var index = (req, res) => {
     req.getConnection(function (err, conn) {
         if (err) {
             console.log(err);
+            console.log('Something went wrong!')
             return res.status(500).send(err);
         }
         conn.query(query, (err, result) => {

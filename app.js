@@ -6,7 +6,6 @@ const cookieParser = require('cookie-parser');
 const myConnection = require('express-myconnection');
 const dotenv = require('dotenv');
 const session = require('express-session');
-var validator = require('express-validator');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const config = require('./config');
@@ -19,21 +18,12 @@ dotenv.config({ path: './.env' });
 
 const app = express();
 
-//CREATE A CONNECTION WITH THE DATABASE, IN THIS CASE MYSQL
-const db = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB,
-    port: process.env.DB_PORT
-});
-
 app.use(myConnection(mysql, {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB,
-    port: process.env.DB_PORT
+    port: process.env.DB_PORT,
 }, 'pool'));
 
 morgan.token('id', function getid(req) {
@@ -77,16 +67,6 @@ function assignid(req, res, next) {
     req.id = uuidv4();
     next();
 }
-
-//CONNECT TO THE MYSQL DATABASE
-db.connect((error) => {
-    if (error) {
-        console.log(error);
-    }
-    else {
-        console.log('connected to mysql database');
-    }
-})
 
 //Define Routes
 
