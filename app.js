@@ -45,7 +45,6 @@ app.disable('x-powered-by');
 let logstream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
 
 app.use(helmet({
-    hsts: true,
     contentSecurityPolicy: {
         directives: {
             "defaultSrc": ["'self'"],
