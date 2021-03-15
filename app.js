@@ -14,6 +14,7 @@ const ejs = require('ejs');
 let xmlparser = require('express-xml-bodyparser');
 var bodyParser = require('body-parser');
 const { v4: uuidv4 } = require('uuid');
+const enforceSSL = require('./enforceSSL');
 dotenv.config({ path: './.env' });
 
 const app = express();
@@ -47,6 +48,7 @@ app.use(helmet({
         }
     }
 }));
+app.use(enforceSSL);
 
 app.use(xmlparser({ strict: true }));
 

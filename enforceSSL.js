@@ -8,4 +8,4 @@ const enforceSSL = (req, res, next) => {
     }
 }
 
-exports.default = enforceSSL;
+module.exports = enforceSSL;
