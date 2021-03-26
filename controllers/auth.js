@@ -121,7 +121,6 @@ exports.login = async (req,res) => {
         }
 
         db.query('SELECT * FROM users WHERE email = ?', [email], async(error, result) => {
-            console.log(results);
             //decrypted_password_bytes = cryptojs.AES.decrypt(password,'secretkey');
             //var decrypted_password = decrypted_password_bytes.toString(cryptojs.enc.Utf8); 
             if( !result || !(await bcrypt.compareSync(password, result[0].password))) { 
